@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Minta's Project Links</title>
-  <link rel="icon" type="image/x-icon" href="/icon.ico">
+  <link id="favicon" rel="icon" type="image/png" href="">
   <style>
     :root {
       --spin-time: 5.5s;
@@ -20,7 +20,6 @@
       overflow: hidden;
     }
 
-    /* BG circles */
     .circles {
       height: var(--circle-size);
       width: var(--circle-size);
@@ -118,6 +117,65 @@
       <button>TikTok Download Web (GitHub)</button>
     </a>
   </div>
+
+  <canvas id="faviconCanvas" width="32" height="32" style="display:none"></canvas>
+
+  <script>
+    const canvas = document.getElementById('faviconCanvas');
+    const ctx = canvas.getContext('2d');
+    const favicon = document.getElementById('favicon');
+    const SIZE = 32;
+    const CX = SIZE / 2;
+    const CY = SIZE / 2;
+    const R = 13;
+    const STROKE = 3;
+    const SPEED = 5.5; // seconds per revolution
+
+    const circles = [
+      { color: '#DB4437', offset: 0 },
+      { color: '#F4B400', offset: Math.PI * 2 * (72 / 360) },
+      { color: '#4285F4', offset: Math.PI * 2 * (-144 / 360) },
+      { color: '#0F9D58', offset: Math.PI * 2 * (216 / 360) },
+    ];
+
+    let start = null;
+
+    function drawFavicon(ts) {
+      if (!start) start = ts;
+      const elapsed = (ts - start) / 1000; // seconds
+      const angle = (elapsed / SPEED) * Math.PI * 2;
+
+      ctx.clearRect(0, 0, SIZE, SIZE);
+
+      // black bg
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, SIZE, SIZE);
+
+      ctx.globalCompositeOperation = 'screen';
+
+      circles.forEach((c, i) => {
+        const dir = i % 2 === 0 ? 1 : -1;
+        const a = angle * dir + c.offset;
+
+        // Offset center slightly like the CSS blob
+        const ox = Math.cos(a) * 1.5;
+        const oy = Math.sin(a) * 1.5;
+
+        ctx.beginPath();
+        ctx.arc(CX + ox, CY + oy, R, 0, Math.PI * 2);
+        ctx.strokeStyle = c.color;
+        ctx.lineWidth = STROKE;
+        ctx.stroke();
+      });
+
+      ctx.globalCompositeOperation = 'source-over';
+
+      favicon.href = canvas.toDataURL('image/png');
+      requestAnimationFrame(drawFavicon);
+    }
+
+    requestAnimationFrame(drawFavicon);
+  </script>
 
 </body>
 </html>
