@@ -5,52 +5,118 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Minta's Project Links</title>
   <style>
-   
-    body {
-      font-family: Arial, sans-serif;
+    :root {
+      --spin-time: 5.5s;
+      --circle-size: 55vmin;
+      --circle-stroke: 2.5vmin;
+    }
+
+    body, html {
+      background-color: black;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* BG circles */
+    .circles {
+      height: var(--circle-size);
+      width: var(--circle-size);
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate3d(-50%, -50%, 0);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .circle {
+      box-sizing: border-box;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: var(--circle-stroke) solid transparent;
+      border-radius: 115% 140% 145% 110% / 125% 140% 110% 125%;
+      mix-blend-mode: screen;
+    }
+
+    .circle:nth-child(1) { border-color: #DB4437; animation: spin1 var(--spin-time) linear infinite; }
+    .circle:nth-child(2) { border-color: #F4B400; animation: spin2 var(--spin-time) linear infinite; }
+    .circle:nth-child(3) { border-color: #4285F4; animation: spin3 var(--spin-time) linear infinite; }
+    .circle:nth-child(4) { border-color: #0F9D58; animation: spin4 var(--spin-time) linear infinite; }
+
+    @keyframes spin1 { 0% { transform: rotate(0deg);    } 100% { transform: rotate(360deg);  } }
+    @keyframes spin2 { 0% { transform: rotate(72deg);   } 100% { transform: rotate(-288deg); } }
+    @keyframes spin3 { 0% { transform: rotate(-144deg); } 100% { transform: rotate(216deg);  } }
+    @keyframes spin4 { 0% { transform: rotate(216deg);  } 100% { transform: rotate(-144deg); } }
+
+    .content {
+      position: fixed;
+      top: 47%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-      padding-top: 50px;
-      background-color: #faf9f5;
+      gap: 8px;
+      width: var(--circle-size);
     }
+
+    h1 {
+      color: #faf9f5;
+      font-family: Arial, sans-serif;
+      margin-bottom: 6px;
+      font-size: 1.3rem;
+      text-align: center;
+    }
+
     button {
-      width: 250px;
-      padding: 10px;
+      width: 200px;
+      padding: 8px;
       cursor: pointer;
       font-weight: bold;
+      font-family: Arial, sans-serif;
     }
+
     a {
       text-decoration: none;
       color: #faf9f5;
-      background-color: azure;
     }
   </style>
 </head>
 <body>
 
-  <h1>My Projects & Links</h1>
+  <div class="circles">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+  </div>
 
-  <a href="https://minta0077.online" target="_blank">
-    <button>Main Website</button>
-  </a>
+  <div class="content">
+    <h1>My Projects</h1>
 
-  <a href="https://github.com/Minta1234/Tiktok-Downloader" target="_blank">
-    <button>TikTok Downloader (GitHub)</button>
-  </a>
-
-  <a href="https://github.com/Minta1234/PongGame.git" target="_blank">
-    <button>Pong Game (GitHub)</button>
-  </a>
-
-  <a href="https://github.com/Minta1234/DriveIconSetter" target="_blank">
-    <button>Drive Icon Setter (GitHub)</button>
-  </a>
-
-  <a href="https://github.com/Minta1234/TiktokDownloadWeb" target="_blank">
-    <button>TikTok Download Web (GitHub)</button>
-  </a>
+    <a href="https://minta0077.online" target="_blank">
+      <button>Main Website</button>
+    </a>
+    <a href="https://minta0077.online/Project#cta" target="_blank">
+      <button>Labs</button>
+    </a>
+    <a href="https://minta0077.online/Project/TiktokDownloader" target="_blank">
+      <button>TikTok Downloader (Web)</button>
+    </a>
+    <a href="https://minta0077.online/Project/DriveIconSetter" target="_blank">
+      <button>Drive Icon Setter (Web)</button>
+    </a>
+    <a href="https://github.com/Minta1234/PongGame.git" target="_blank">
+      <button>Pong Game (GitHub)</button>
+    </a>
+    <a href="https://github.com/Minta1234/TiktokDownloadWeb" target="_blank">
+      <button>TikTok Download Web (GitHub)</button>
+    </a>
+  </div>
 
 </body>
 </html>
