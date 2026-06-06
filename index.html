@@ -8,8 +8,8 @@
   <style>
     :root {
       --spin-time: 5.5s;
-      --circle-size: clamp(240px, 80vmin, 480px);
-      --circle-stroke: clamp(8px, 2.2vmin, 12px);
+      --circle-size: clamp(320px, 90vmin, 760px);
+      --circle-stroke: clamp(8px, 2.2vmin, 16px);
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -30,16 +30,16 @@
 
     /* BG circles */
     .circles {
-      height: var(--circle-size);
-      width: var(--circle-size);
+      height: calc(var(--circle-size) * 1.16);
+      width: calc(var(--circle-size) * 1.16);
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 0;
       pointer-events: none;
-      max-width: calc(100vw + 200px);
-      max-height: calc(100vh + 200px);
+      max-width: calc(100vw + 260px);
+      max-height: calc(100vh + 260px);
     }
 
     .circle {
