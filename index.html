@@ -8,27 +8,38 @@
   <style>
     :root {
       --spin-time: 5.5s;
-      --circle-size: 55vmin;
-      --circle-stroke: 2.5vmin;
+      --circle-size: clamp(240px, 80vmin, 480px);
+      --circle-stroke: clamp(8px, 2.2vmin, 12px);
     }
+
+    *, *::before, *::after { box-sizing: border-box; }
 
     body, html {
-      background-color: black;
+      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08), transparent 24%),
+                  radial-gradient(circle at 80% 25%, rgba(66,133,244,0.12), transparent 18%),
+                  linear-gradient(180deg, #020202 0%, #070707 100%);
       margin: 0;
-      padding: 0;
-      height: 100%;
+      padding: 8px;
+      min-height: 100vh;
+      width: 100%;
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
+    /* BG circles */
     .circles {
       height: var(--circle-size);
       width: var(--circle-size);
       position: fixed;
       top: 50%;
       left: 50%;
-      transform: translate3d(-50%, -50%, 0);
+      transform: translate(-50%, -50%);
       z-index: 0;
       pointer-events: none;
+      max-width: calc(100vw + 200px);
+      max-height: calc(100vh + 200px);
     }
 
     .circle {
@@ -51,38 +62,94 @@
     @keyframes spin3 { 0% { transform: rotate(-144deg); } 100% { transform: rotate(216deg);  } }
     @keyframes spin4 { 0% { transform: rotate(216deg);  } 100% { transform: rotate(-144deg); } }
 
+    /* Content centered inside circle */
     .content {
-      position: fixed;
-      top: 47%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      position: relative;
       z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
-      width: var(--circle-size);
+      gap: clamp(8px, 1.2vmin, 12px);
+      width: clamp(240px, 90vw, 420px);
+      max-height: calc(100vh - 24px);
+      padding: 14px;
+      overflow: hidden;
+      border-radius: 24px;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(10px);
     }
 
     h1 {
       color: #faf9f5;
       font-family: Arial, sans-serif;
-      margin-bottom: 6px;
-      font-size: 1.3rem;
+      margin: 0 0 4px 0;
+      font-size: clamp(0.9rem, 3vmin, 1.3rem);
       text-align: center;
     }
 
     button {
-      width: 200px;
-      padding: 8px;
+      width: 100%;
+      padding: clamp(5px, 1.5vmin, 10px) 8px;
       cursor: pointer;
       font-weight: bold;
       font-family: Arial, sans-serif;
+      font-size: clamp(0.65rem, 2vmin, 0.85rem);
+      white-space: nowrap;
     }
 
     a {
       text-decoration: none;
       color: #faf9f5;
+      width: 100%;
+      display: block;
+    }
+
+    .link-button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding: clamp(10px, 1.5vmin, 14px) 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.08);
+      color: #faf9f5;
+      font-weight: bold;
+      font-family: Arial, sans-serif;
+      font-size: clamp(0.75rem, 2vmin, 0.95rem);
+      text-decoration: none;
+      transition: transform 0.2s ease, background 0.2s ease;
+      white-space: normal;
+      line-height: 1.3;
+      text-align: center;
+      min-height: 3rem;
+    }
+
+    .link-button:hover {
+      background: rgba(255, 255, 255, 0.16);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 420px) {
+      body, html {
+        padding: 12px;
+      }
+
+      .content {
+        width: min(100%, 95vw);
+        max-height: calc(100vh - 32px);
+        padding: 14px;
+        gap: 10px;
+      }
+
+      h1 {
+        font-size: 1rem;
+      }
+
+      .link-button {
+        font-size: 0.85rem;
+        padding: 10px 12px;
+      }
     }
   </style>
 </head>
@@ -98,83 +165,52 @@
   <div class="content">
     <h1>My Projects</h1>
 
-    <a href="https://minta0077.online" target="_blank">
-      <button>Main Website</button>
-    </a>
-    <a href="https://minta0077.online/Project" target="_blank">
-      <button>Labs</button>
-    </a>
-    <a href="https://minta0077.online/Project/TiktokDownloader" target="_blank">
-      <button>TikTok Downloader (Web)</button>
-    </a>
-    <a href="https://minta0077.online/Project/DriveIconSetter" target="_blank">
-      <button>Drive Icon Setter (Web)</button>
-    </a>
-    <a href="https://github.com/Minta1234/PongGame.git" target="_blank">
-      <button>Pong Game (GitHub)</button>
-    </a>
-    <a href="https://github.com/Minta1234/TiktokDownloadWeb" target="_blank">
-      <button>TikTok Download Web (GitHub)</button>
-    </a>
+    <a class="link-button" href="https://minta0077.online" target="_blank" rel="noopener noreferrer">Main Website</a>
+    <a class="link-button" href="https://minta0077.online/Project" target="_blank" rel="noopener noreferrer">Labs</a>
+    <a class="link-button" href="https://minta0077.online/Project/TiktokDownloader" target="_blank" rel="noopener noreferrer">TikTok Downloader (Web)</a>
+    <a class="link-button" href="https://minta0077.online/Project/DriveIconSetter" target="_blank" rel="noopener noreferrer">Drive Icon Setter (Web)</a>
+    <a class="link-button" href="https://github.com/Minta1234/PongGame.git" target="_blank" rel="noopener noreferrer">Pong Game (GitHub)</a>
+    <a class="link-button" href="https://github.com/Minta1234/TiktokDownloadWeb" target="_blank" rel="noopener noreferrer">TikTok Download Web (GitHub)</a>
   </div>
 
   <canvas id="faviconCanvas" width="32" height="32" style="display:none"></canvas>
 
   <script>
     const canvas = document.getElementById('faviconCanvas');
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas?.getContext?.('2d');
     const favicon = document.getElementById('favicon');
-    const SIZE = 32;
-    const CX = SIZE / 2;
-    const CY = SIZE / 2;
-    const R = 13;
-    const STROKE = 3;
-    const SPEED = 5.5; // seconds per revolution
-
+    const SIZE = 32, CX = 16, CY = 16, R = 13, STROKE = 3, SPEED = 5.5;
     const circles = [
       { color: '#DB4437', offset: 0 },
-      { color: '#F4B400', offset: Math.PI * 2 * (72 / 360) },
-      { color: '#4285F4', offset: Math.PI * 2 * (-144 / 360) },
-      { color: '#0F9D58', offset: Math.PI * 2 * (216 / 360) },
+      { color: '#F4B400', offset: Math.PI * 2 * (72/360) },
+      { color: '#4285F4', offset: Math.PI * 2 * (-144/360) },
+      { color: '#0F9D58', offset: Math.PI * 2 * (216/360) },
     ];
-
     let start = null;
-
     function drawFavicon(ts) {
       if (!start) start = ts;
-      const elapsed = (ts - start) / 1000; // seconds
-      const angle = (elapsed / SPEED) * Math.PI * 2;
-
+      const angle = ((ts - start) / 1000 / SPEED) * Math.PI * 2;
       ctx.clearRect(0, 0, SIZE, SIZE);
-
-      // black bg
       ctx.fillStyle = '#000';
       ctx.fillRect(0, 0, SIZE, SIZE);
-
       ctx.globalCompositeOperation = 'screen';
-
       circles.forEach((c, i) => {
-        const dir = i % 2 === 0 ? 1 : -1;
-        const a = angle * dir + c.offset;
-
-        // Offset center slightly like the CSS blob
-        const ox = Math.cos(a) * 1.5;
-        const oy = Math.sin(a) * 1.5;
-
+        const a = angle * (i % 2 === 0 ? 1 : -1) + c.offset;
         ctx.beginPath();
-        ctx.arc(CX + ox, CY + oy, R, 0, Math.PI * 2);
+        ctx.arc(CX + Math.cos(a) * 1.5, CY + Math.sin(a) * 1.5, R, 0, Math.PI * 2);
         ctx.strokeStyle = c.color;
         ctx.lineWidth = STROKE;
         ctx.stroke();
       });
-
       ctx.globalCompositeOperation = 'source-over';
-
       favicon.href = canvas.toDataURL('image/png');
       requestAnimationFrame(drawFavicon);
     }
-
-    requestAnimationFrame(drawFavicon);
+    if (canvas && ctx && favicon) {
+      requestAnimationFrame(drawFavicon);
+    } else {
+      console.warn('Favicon animation skipped: canvas or favicon link unavailable.');
+    }
   </script>
 
 </body>
